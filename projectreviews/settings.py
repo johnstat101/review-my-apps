@@ -1,15 +1,24 @@
-from pathlib import Path
 import os
+import dj_database_url
+import django_heroku
+from decouple import config, Csv
+
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-06eh)8%6m2#*v&w0^1)h^(i*c9j0y#*&k9m49ii%9q6d)(zx$8'
+SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-06eh)8%6m2#*v&w0^1)h^(i*c9j0y#*&k9m49ii%9q6d)(zx$8'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,8 +43,8 @@ INSTALLED_APPS = [
 ]
 
 UPLOADCARE = {
-    'pub_key': '2b709bca64245dd9e55e',
-    'secret': '0a60851de5f3db2dc728',
+    'pub_key': 'd4602f5f544c3dff20b7',
+    'secret': '8bed10c896e8c0514630',
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -75,15 +84,38 @@ WSGI_APPLICATION = 'projectreviews.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'projectreviews',
-        'USER': 'postgres',
-    'PASSWORD':'Njoro',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'projectreviews',
+#         'USER': 'postgres',
+#     'PASSWORD':'Njoro',
+#     }
+# }
 
+
+if config('MODE')=="dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
+       
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -142,3 +174,5 @@ REST_FRAMEWORK = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
