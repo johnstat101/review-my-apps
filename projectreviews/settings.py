@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'myapps',
     'crispy_forms',
     'bootstrap4',
+    'pyuploadcare.dj',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
