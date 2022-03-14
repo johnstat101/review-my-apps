@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+
+<!-- static -->
+{% load static %}
 <!-- block -->
 {% block content %}
 
 <h1>Hello Python</h1>
 
-
+{% for prof in profile %}
+<img src="{{ prof.profile_picture.url }}" alt="prof_pic">
+<!--  -->
+{% endfor %}
 <!-- endblock -->
 {% endblock %}

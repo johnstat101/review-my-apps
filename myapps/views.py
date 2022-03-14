@@ -1,6 +1,9 @@
+import profile
 from django.shortcuts import render
+from .models import Profile
 
 def index(request):
     '''
     '''
-    return render(request,'index.html')
+    profile = Profile.objects.all()
+    return render(request,'index.html',{"profile": profile})
