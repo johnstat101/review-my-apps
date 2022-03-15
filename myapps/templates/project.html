@@ -17,7 +17,9 @@
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="col-md-6 d-flex flex-row mx-auto" style="margin-top:20%">
-                                {% for rating in post.ratings.all %} {% if forloop.counter is post.ratings.all.count %}
+                                {% for rating in post.ratings.all %}
+                                <!--  -->
+                                {% if forloop.counter is post.ratings.all.count %}
                                 <div id="design">{{ rating.design_average}}<br>
                                     <span class="rates">design</span>
                                 </div>
@@ -51,7 +53,9 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <h3 class="D-block mx-auto">Ratings Scores</h3>
-                    {% for rating in post.ratings.all %} {% if forloop.counter is post.ratings.all.count %}
+                    {% for rating in post.ratings.all %}
+                    <!--  -->
+                    {% if forloop.counter is post.ratings.all.count %}
                     <a class="btn btn-info btn-sm">
                         <h5>{{ rating.score }}</h5>
                         <span class="sc">Average Score</span>
@@ -75,9 +79,13 @@
 
             {% if rating_status %}
             <h5>You have already voted</h5>
-            {% else %} {% if user.is_authenticated %}
+            {% else %}
+            <!--  -->
+            {% if user.is_authenticated %}
             <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %} {{rating_form|crispy}}
+                {% csrf_token %}
+                <!--  -->
+                {{rating_form|crispy}}
                 <button class="btn btn-sm btn-info">Rate</button>
             </form>
             {% endif %} {% endif %}
