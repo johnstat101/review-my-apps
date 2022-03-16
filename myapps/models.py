@@ -29,7 +29,7 @@ class Profile(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=155)
-    url = models.URLField(max_length=255)
+    url = models.URLField(max_length=255,blank=True)
     description = models.TextField(max_length=255)
     technologies = models.CharField(max_length=200, blank=True)
     photo = ImageField(manual_crop='1280x720')
