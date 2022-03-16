@@ -1,1 +1,1 @@
-web: gunicorn gallerly.wsgi
+web: gunicorn projectreviews.wsgi
