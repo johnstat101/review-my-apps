@@ -14,7 +14,7 @@ class SignupForm(UserCreationForm):
 
 
 class PostForm(forms.ModelForm):
-    photo = ImageField(label='')
+    photo = ImageField(label='Upload Image')
 
     class Meta:
         model = Post
